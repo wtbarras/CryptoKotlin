@@ -36,4 +36,45 @@ class NumberTheory() {
 
         return greatestCommonDivisor
     }
+
+    /*
+    efficientGCD
+    This method finds the greatest common divisor of two integers a and b using an efficient form of the Extended Euclidean Algorithm.
+    It should be faster than the implementation in greatestCommonDivisor()
+        1) Set u = 1, g = a, x = 0, and y = b
+        2) If y == 0, set v = (g-au)/b and return the values (g, u, v)
+        3) Divide g by y with remainder, g = qy+t, with 0 <= t < y
+        4) Set s = u - qx
+        5) Set u = x and g = y
+        6) Set x = s and y = t
+        7) Go to step 2
+     */
+    fun efficientGCD(a : Int, b : Int) : Int {
+        var greatestCommonDivisor : Int = -1
+
+        var u : Int = 1
+        var g : Int = a
+        var x : Int = 0
+        var y : Int = b
+
+        while (y != 0) {
+            val q: Int = g / y
+            val t: Int = g % y
+            val s: Int = u - (q * x)
+            u = x
+            g = y
+            x = s
+            y = t
+        }
+
+        // If one of the numbers is 0, then the GCD of those two numbers is just the other number
+        if (b == 0) {
+            greatestCommonDivisor = a
+        } else {
+            val v : Int = (g - (a * u)) / b
+            greatestCommonDivisor = (a * u) + (v * b)
+        }
+
+        return greatestCommonDivisor
+    }
 }
